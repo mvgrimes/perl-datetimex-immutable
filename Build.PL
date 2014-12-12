@@ -21,8 +21,8 @@ my $build = Module::Build->new(
     meta_merge => {
         resources => {
             bugtracker =>
-              'http://rt.cpan.org/NoAuth/Bugs.html?Dist=DateTimeX-Immutable',
-            repository => 'http://github.com/mvgrimes/DateTimeX-Immutable'
+              'https://github.com/mvgrimes/perl-datetimex-immutable/issues',
+            repository => 'https://github.com/mvgrimes/perl-datetimex-immutable'
         }
     },
 );
