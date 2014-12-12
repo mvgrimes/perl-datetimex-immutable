@@ -12,11 +12,13 @@ my $build = Module::Build->new(
         'perl'                 => '5.006',
         'DateTime'             => '1.00',
         'Role::Tiny'           => '1.000',
+        'Carp'                 => '1.0000',
         'namespace::autoclean' => '0.21',
     },
 
     test_requires => {
-        'Test::More' => '0.87',
+        'Test::More'      => '0.87',
+        'Test::Exception' => '0.35',
     },
 
     meta_merge => {

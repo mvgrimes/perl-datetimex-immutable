@@ -4,6 +4,7 @@ package DateTimeX::Role::Immutable;
 
 use strict;
 use warnings;
+use Carp;
 use Role::Tiny;
 use namespace::autoclean;
 
@@ -15,11 +16,15 @@ my @mutators = [ qw(
       ) ];
       # set_time_zone set_locale set_formatter
 
-around @mutators => sub {
+before @mutators => sub {
     my $orig = shift;
     my $self = shift;
 
-    return $self->clone->$orig(@_);
+    croak "Attempted to mutate a DateTime object";
+};
+
+sub with_add {
+    return shift->clone->SUPER::add( @_ );
 };
 
 1;
