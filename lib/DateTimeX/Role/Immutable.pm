@@ -12,6 +12,7 @@ my @mutators = [ qw(
       add_duration subtract_duration truncate set
       set_year set_month set_day set_hour set_minute set_second set_nanosecond
       ) ];
+      # set_time_zone set_locale set_formatter
 
 around @mutators => sub {
     my $orig = shift;
@@ -47,6 +48,24 @@ This is role that can be composed into a L<DateTime> subclass which will
 override the methods that modify a DateTime object. Those new methods leave the
 original object untouched, and return a new DateTime object with the expected
 changes.
+
+The methods that are impacted are:
+
+    add_duration
+    subtract_duration
+    truncate
+    set
+    set_year
+    set_month
+    set_day
+    set_hour
+    set_minute
+    set_second
+    set_nanosecond
+
+At the moment, C<set_time_zone>, C<set_locale>, and C<set_formatter> continue
+to act as mutators. DateTime uses these internally and changing them creates
+unexpected behavior. These methods also do not really change the time value.
 
 =head1 SEE ALSO
 

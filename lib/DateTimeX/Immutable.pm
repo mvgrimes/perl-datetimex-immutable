@@ -42,6 +42,24 @@ This is subclass of L<DateTime> which overrides the methods that modify a
 DateTime object. Those new methods leave the original object untouched, and
 return a new DateTime object with the expected changes.
 
+The methods that are impacted are:
+
+    add_duration
+    subtract_duration
+    truncate
+    set
+    set_year
+    set_month
+    set_day
+    set_hour
+    set_minute
+    set_second
+    set_nanosecond
+
+At the moment, C<set_time_zone>, C<set_locale>, and C<set_formatter> continue
+to act as mutators. DateTime uses these internally and changing them creates
+unexpected behavior. These methods also do not really change the time value.
+
 TODO: Talk about why this is a good idea, how it is implemented, and how this
 differs from alternate approaches.
 
