@@ -15,7 +15,7 @@ my $build = Module::Build->new(
     },
 
     test_requires => {
-        'Test::More' => 0.87,
+        'Test::More' => '0.87',
     },
 
     meta_merge => {

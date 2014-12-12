@@ -26,15 +26,10 @@ foreach my $MODULE (@MODULES) {
     }
 }
 
-# Skip platform specific modules unless we are on that platform
 # Don't require any pod for Moose BUILD subs
 pod_coverage_ok( $_,
     { trustme => ['BUILD'], coverage_class => 'Pod::Coverage::TrustPod' } )
-  for grep {
-    not(   ( $^O ne 'linux' && $_ =~ /Linux$/ )
-        or ( $^O ne 'darwin' && $_ =~ /Mac$/ )
-        or ( $^O ne 'bsd' && $_ =~ /BSD$/ ) )
-  } all_modules();
+  for all_modules();
 
 done_testing;
 
