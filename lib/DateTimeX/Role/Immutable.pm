@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Role::Tiny;
 
-our $VERSION = '0.91';
+our $VERSION = '0.33';
 
 my @mutators = [ qw(
       add_duration subtract_duration truncate set
@@ -33,7 +33,7 @@ DateTimeX::Role::Immutable - A role that can be composed into a DateTime subclas
 
 =head1 VERSION
 
-version 0.91
+version 0.33
 
 =head1 SYNOPSIS
 

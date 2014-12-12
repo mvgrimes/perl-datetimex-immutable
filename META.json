@@ -14,11 +14,6 @@
    },
    "name" : "DateTimeX-Immutable",
    "prereqs" : {
-      "build" : {
-         "requires" : {
-            "Test::More" : "0.87"
-         }
-      },
       "configure" : {
          "requires" : {
             "Module::Build" : "0.4004"
@@ -27,10 +22,24 @@
       "runtime" : {
          "requires" : {
             "DateTime" : "1.00",
-            "Sub::Install" : "0",
-            "namespace::autoclean" : "0",
+            "Role::Tiny" : "1.000",
             "perl" : "5.006"
          }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.87"
+         }
+      }
+   },
+   "provides" : {
+      "DateTimeX::Immutable" : {
+         "file" : "lib/DateTimeX/Immutable.pm",
+         "version" : "0.33"
+      },
+      "DateTimeX::Role::Immutable" : {
+         "file" : "lib/DateTimeX/Role/Immutable.pm",
+         "version" : "0.33"
       }
    },
    "release_status" : "stable",
@@ -45,5 +54,5 @@
          "url" : "http://github.com/mvgrimes/DateTimeX-Immutable"
       }
    },
-   "version" : "0.91"
+   "version" : "0.33"
 }

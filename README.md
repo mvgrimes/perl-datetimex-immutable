@@ -1,34 +1,12 @@
-package DateTimeX::Immutable;
-
-# ABSTRACT: An immutable subclass of DateTime
-
-use strict;
-use warnings;
-use base 'DateTime';
-use Role::Tiny::With;
-
-our $VERSION = '0.33';
-
-with 'DateTimeX::Role::Immutable';
-
-sub st { return shift->strftime("%FT%T%Z"); }
-sub dt { return shift->st; }
-
-1;
-
-__END__
-
-=pod
-
-=head1 NAME
+# NAME
 
 DateTimeX::Immutable - An immutable subclass of DateTime
 
-=head1 VERSION
+# VERSION
 
 version 0.33
 
-=head1 SYNOPSIS
+# SYNOPSIS
 
     use DateTimeX::Immutable;
     my $now = DateTime->now;  # 2012-12-12T11:15:10
@@ -36,9 +14,9 @@ version 0.33
     say $now;  # 2012-12-12T11:15:10
     say $day;  # 2012-12-12T00:00:00
 
-=head1 DESCRIPTION
+# DESCRIPTION
 
-This is subclass of L<DateTime> which overrides the methods that modify a
+This is subclass of [DateTime](https://metacpan.org/pod/DateTime) which overrides the methods that modify a
 DateTime object. Those new methods leave the original object untouched, and
 return a new DateTime object with the expected changes.
 
@@ -56,26 +34,24 @@ The methods that are impacted are:
     set_second
     set_nanosecond
 
-At the moment, C<set_time_zone>, C<set_locale>, and C<set_formatter> continue
+At the moment, `set_time_zone`, `set_locale`, and `set_formatter` continue
 to act as mutators. DateTime uses these internally and changing them creates
 unexpected behavior. These methods also do not really change the time value.
 
 TODO: Talk about why this is a good idea, how it is implemented, and how this
 differs from alternate approaches.
 
-=head1 SEE ALSO
+# SEE ALSO
 
-L<DateTime>, L<DateTime::Moonpig>, L<Time::Moment>
+[DateTime](https://metacpan.org/pod/DateTime), [DateTime::Moonpig](https://metacpan.org/pod/DateTime::Moonpig), [Time::Moment](https://metacpan.org/pod/Time::Moment)
 
-=head1 AUTHOR
+# AUTHOR
 
-Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>
+Mark Grimes, <mgrimes@cpan.org>
 
-=head1 COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>.
+This software is copyright (c) 2014 by Mark Grimes, <mgrimes@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
-=cut
