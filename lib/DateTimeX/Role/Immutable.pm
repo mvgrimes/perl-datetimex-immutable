@@ -5,6 +5,7 @@ package DateTimeX::Role::Immutable;
 use strict;
 use warnings;
 use Role::Tiny;
+use namespace::autoclean;
 
 our $VERSION = '0.33';
 

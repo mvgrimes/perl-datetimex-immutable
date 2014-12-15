@@ -9,9 +9,10 @@ my $build = Module::Build->new(
     },
 
     requires => {
-        'perl'       => '5.006',
-        'DateTime'   => '1.00',
-        'Role::Tiny' => '1.000',
+        'perl'                 => '5.006',
+        'DateTime'             => '1.00',
+        'Role::Tiny'           => '1.000',
+        'namespace::autoclean' => '0.21',
     },
 
     test_requires => {

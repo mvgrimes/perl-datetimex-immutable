@@ -6,6 +6,7 @@ use strict;
 use warnings;
 use base 'DateTime';
 use Role::Tiny::With;
+use namespace::autoclean;
 
 our $VERSION = '0.33';
 
