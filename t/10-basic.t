@@ -17,6 +17,7 @@ my $dt        = DateTimeX::Immutable->new(
 isa_ok $dt, 'DateTimeX::Immutable';
 is $dt->st, '2014-12-09T12:00:00EST', '... equals correct time';
 
+# Old mutators should throw exceptions
 throws_ok { $dt->add( minutes => 20 ) } $exception, '... add croaks';
 is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
 
@@ -29,13 +30,14 @@ is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
 throws_ok { $dt->truncate( to => 'day' ) } $exception, '... truncate croaks';
 is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
 
+# Now try the new methods
 is $dt->with_add( minutes => 20 )->st, '2014-12-09T12:20:00EST', 'Add 20min';
 is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
 
 is $dt->with_minute(20)->st, '2014-12-09T12:20:00EST', 'Set 20min';
 is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
 
-is $dt->with( minute => 20 )->st, '2014-12-09T12:20:00EST', 'Set 20min';
+is $dt->with_set( minute => 20 )->st, '2014-12-09T12:20:00EST', 'Set 20min';
 is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
 
 is $dt->with_truncate( to => 'day' )->st, '2014-12-09T00:00:00EST',

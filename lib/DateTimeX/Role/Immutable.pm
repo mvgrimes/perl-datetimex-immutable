@@ -6,6 +6,8 @@ use strict;
 use warnings;
 use Carp;
 use Role::Tiny;
+use Scalar::Util qw(blessed);
+use DateTime;
 use namespace::autoclean;
 
 our $VERSION = '0.33';
@@ -14,18 +16,46 @@ my @mutators = [ qw(
       add_duration subtract_duration truncate set
       set_year set_month set_day set_hour set_minute set_second set_nanosecond
       ) ];
-      # set_time_zone set_locale set_formatter
+## Consider: set_time_zone set_locale set_formatter
 
-before @mutators => sub {
+around @mutators => sub {
     my $orig = shift;
     my $self = shift;
+    my $ok   = shift;
 
-    croak "Attempted to mutate a DateTime object";
+    croak "Attempted to mutate a DateTime object"
+      unless blessed($ok) && $ok->isa('DateTimeX::Immutable::OkToMutate');
+
+    return $self->$orig(@_);
 };
 
 sub with_add {
-    return shift->clone->SUPER::add( @_ );
-};
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->add(@_);
+    bless $new, ref $self;
+}
+
+sub with_set {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set(@_);
+    bless $new, ref $self;
+}
+
+sub with_minute {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_minute(@_);
+    bless $new, ref $self;
+}
+
+sub with_truncate {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->truncate(@_);
+    bless $new, ref $self;
+}
 
 1;
 
