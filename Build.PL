@@ -13,6 +13,7 @@ my $build = Module::Build->new(
         'DateTime'             => '1.00',
         'Role::Tiny'           => '1.000',
         'Carp'                 => '1.0000',
+        'Sub::Install'         => '0.900',
         'namespace::autoclean' => '0.21',
     },
 

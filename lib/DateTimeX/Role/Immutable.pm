@@ -6,114 +6,47 @@ use strict;
 use warnings;
 use Carp;
 use Role::Tiny;
-use Scalar::Util qw(blessed);
+use Sub::Install;
 use DateTime;
 use namespace::autoclean;
 
 our $VERSION = '0.33';
 
-my @mutators = [ qw(
-      add_duration subtract_duration truncate set
-      set_year set_month set_day set_hour set_minute set_second set_nanosecond
-      ) ];
+my %mutators = (
+    add_duration      => 'with_add_duration',
+    subtract_duration => 'with_subtract_duration',
+    add               => 'with_add',
+    subtract          => 'with_subtract',
+    truncate          => 'with_truncate',
+    set               => 'with_set',
+    set_year          => 'with_year',
+    set_month         => 'with_month',
+    set_day           => 'with_day',
+    set_hour          => 'with_hour',
+    set_minute        => 'with_minute',
+    set_second        => 'with_second',
+    set_nanosecond    => 'with_nanosecond',
+);
 ## Consider: set_time_zone set_locale set_formatter
 
-before @mutators => sub {
+before keys %mutators => sub {
     my $orig = shift;
     my $self = shift;
 
     croak "Attempted to mutate a DateTime object";
 };
 
-sub with_add {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->add(@_);
-    bless $new, ref $self;
-}
-
-sub with_subtract {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->subtract(@_);
-    bless $new, ref $self;
-}
-
-sub with_add_duration {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->add_duration(@_);
-    bless $new, ref $self;
-}
-
-sub with_subtract_duration {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->subtract_duration(@_);
-    bless $new, ref $self;
-}
-
-sub with_set {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set(@_);
-    bless $new, ref $self;
-}
-
-sub with_year {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_year(@_);
-    bless $new, ref $self;
-}
-
-sub with_month {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_month(@_);
-    bless $new, ref $self;
-}
-
-sub with_day {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_day(@_);
-    bless $new, ref $self;
-}
-
-sub with_hour {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_hour(@_);
-    bless $new, ref $self;
-}
-
-sub with_minute {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_minute(@_);
-    bless $new, ref $self;
-}
-
-sub with_second {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_second(@_);
-    bless $new, ref $self;
-}
-
-sub with_nanosecond {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->set_nanosecond(@_);
-    bless $new, ref $self;
-}
-
-sub with_truncate {
-    my $self = shift;
-    my $new = DateTime->from_object( object => $self );
-    $new->truncate(@_);
-    bless $new, ref $self;
+while ( my ( $orig_method, $new_method ) = each %mutators ) {
+    print "# $orig_method => $new_method\n";
+    Sub::Install::install_sub( {
+            code => sub {
+                my $self = shift;
+                my $new_dt = DateTime->from_object( object => $self );
+                $new_dt->$orig_method(@_);
+                return bless $new_dt, ref $self;
+            },
+            as => $new_method,
+        } );
 }
 
 1;
@@ -139,24 +72,42 @@ version 0.33
 
 =head1 DESCRIPTION
 
-This is role that can be composed into a L<DateTime> subclass which will 
-override the methods that modify a DateTime object. Those new methods leave the
-original object untouched, and return a new DateTime object with the expected
-changes.
+This is role that can be composed into a L<DateTime> subclass to make those
+objects immutable. The C<set> methods are replaced with new methods that leave
+the original object untouched, and return a new DateTime object with the
+expected changes.
 
-The methods that are impacted are:
+The following methods now thrown an exception:
 
-    add_duration
-    subtract_duration
-    truncate
-    set
-    set_year
-    set_month
-    set_day
-    set_hour
-    set_minute
-    set_second
-    set_nanosecond
+    $dt->add_duration()
+    $dt->subtract_duration()
+    $dt->add()
+    $dt->subtract()
+    $dt->set()
+    $dt->set_year()
+    $dt->set_month()
+    $dt->set_day()
+    $dt->set_hour()
+    $dt->set_minute()
+    $dt->set_second()
+    $dt->set_nanosecond()
+    $dt->truncate()
+
+and are replaced by these methods which return the changed value:
+
+    $dt->with_add_duration()
+    $dt->with_subtract_duration()
+    $dt->with_add()
+    $dt->with_subtract()
+    $dt->with_set()
+    $dt->with_year()
+    $dt->with_month()
+    $dt->with_day()
+    $dt->with_hour()
+    $dt->with_minute()
+    $dt->with_second()
+    $dt->with_nanosecond()
+    $dt->with_truncate()
 
 At the moment, C<set_time_zone>, C<set_locale>, and C<set_formatter> continue
 to act as mutators. DateTime uses these internally and changing them creates
