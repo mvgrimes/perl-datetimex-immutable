@@ -12,10 +12,6 @@ BEGIN {
                 s{.pm$}{};
                 s{/}{::}g;
 
-                return if m{Inotify2$} and $^O ne 'linux';
-                return if m{FSEvents$} and $^O ne 'darwin';
-                return if m{KQueue$}   and $^O !~ /bsd/;
-
                 use_ok($_)
                   or die "Couldn't use_ok $_";
             },
