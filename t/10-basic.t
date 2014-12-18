@@ -18,30 +18,47 @@ isa_ok $dt, 'DateTimeX::Immutable';
 is $dt->st, '2014-12-09T12:00:00EST', '... equals correct time';
 
 # Old mutators should throw exceptions
-throws_ok { $dt->add( minutes => 20 ) } $exception, '... add croaks';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
-
-throws_ok { $dt->set_minute(20) } $exception, '... set_minute croaks';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
-
-throws_ok { $dt->set( minute => 20 ) } $exception, '... set croaks';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
-
-throws_ok { $dt->truncate( to => 'day' ) } $exception, '... truncate croaks';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
+my @mutators = qw( add subtract add_duration subtract_duration truncate set
+  set_year set_month set_day set_hour set_minute set_second set_nanosecond );
+for my $mutator (@mutators) {
+    throws_ok { $dt->$mutator() } $exception, "$mutator croaks";
+    is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+}
 
 # Now try the new methods
-is $dt->with_add( minutes => 20 )->st, '2014-12-09T12:20:00EST', 'Add 20min';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
+is $dt->with_add( minutes => 20 )->st, '2014-12-09T12:20:00EST', 'add 20min';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
-is $dt->with_minute(20)->st, '2014-12-09T12:20:00EST', 'Set 20min';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
+is $dt->with_subtract( minutes => 20 )->st, '2014-12-09T11:40:00EST',
+  'subtract 20min';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
-is $dt->with_set( minute => 20 )->st, '2014-12-09T12:20:00EST', 'Set 20min';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
+is $dt->with_year(2010)->st, '2010-12-09T12:00:00EST', 'year=2010';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_month(11)->st, '2014-11-09T12:00:00EST', 'month=11';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_day(20)->st, '2014-12-20T12:00:00EST', 'day=20';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_hour(20)->st, '2014-12-09T20:00:00EST', 'hour=20';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_minute(20)->st, '2014-12-09T12:20:00EST', 'minute=20';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_second(20)->st, '2014-12-09T12:00:20EST', 'second=20';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_nanosecond(20)->st, '2014-12-09T12:00:00EST', 'nanosecond=20';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
+
+is $dt->with_set( minute => 20 )->st, '2014-12-09T12:20:00EST', 'set 20min';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
 is $dt->with_truncate( to => 'day' )->st, '2014-12-09T00:00:00EST',
-  'Truncate to day';
-is $dt->st, '2014-12-09T12:00:00EST', '... does not mutate';
+  'truncate to day';
+is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
 done_testing;

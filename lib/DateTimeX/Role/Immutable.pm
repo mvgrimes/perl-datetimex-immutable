@@ -18,21 +18,38 @@ my @mutators = [ qw(
       ) ];
 ## Consider: set_time_zone set_locale set_formatter
 
-around @mutators => sub {
+before @mutators => sub {
     my $orig = shift;
     my $self = shift;
-    my $ok   = shift;
 
-    croak "Attempted to mutate a DateTime object"
-      unless blessed($ok) && $ok->isa('DateTimeX::Immutable::OkToMutate');
-
-    return $self->$orig(@_);
+    croak "Attempted to mutate a DateTime object";
 };
 
 sub with_add {
     my $self = shift;
     my $new = DateTime->from_object( object => $self );
     $new->add(@_);
+    bless $new, ref $self;
+}
+
+sub with_subtract {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->subtract(@_);
+    bless $new, ref $self;
+}
+
+sub with_add_duration {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->add_duration(@_);
+    bless $new, ref $self;
+}
+
+sub with_subtract_duration {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->subtract_duration(@_);
     bless $new, ref $self;
 }
 
@@ -43,10 +60,52 @@ sub with_set {
     bless $new, ref $self;
 }
 
+sub with_year {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_year(@_);
+    bless $new, ref $self;
+}
+
+sub with_month {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_month(@_);
+    bless $new, ref $self;
+}
+
+sub with_day {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_day(@_);
+    bless $new, ref $self;
+}
+
+sub with_hour {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_hour(@_);
+    bless $new, ref $self;
+}
+
 sub with_minute {
     my $self = shift;
     my $new = DateTime->from_object( object => $self );
     $new->set_minute(@_);
+    bless $new, ref $self;
+}
+
+sub with_second {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_second(@_);
+    bless $new, ref $self;
+}
+
+sub with_nanosecond {
+    my $self = shift;
+    my $new = DateTime->from_object( object => $self );
+    $new->set_nanosecond(@_);
     bless $new, ref $self;
 }
 
