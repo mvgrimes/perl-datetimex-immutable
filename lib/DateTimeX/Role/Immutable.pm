@@ -13,12 +13,12 @@ use namespace::autoclean;
 our $VERSION = '0.33';
 
 my %mutators = (
-    add_duration      => 'with_add_duration',
-    subtract_duration => 'with_subtract_duration',
-    add               => 'with_add',
-    subtract          => 'with_subtract',
-    truncate          => 'with_truncate',
-    set               => 'with_set',
+    add_duration      => 'plus_duration',
+    subtract_duration => 'minus_duration',
+    add               => 'plus',
+    subtract          => 'minus',
+    truncate          => 'trunc',
+    set               => 'with_component',
     set_year          => 'with_year',
     set_month         => 'with_month',
     set_day           => 'with_day',
@@ -95,11 +95,11 @@ The following methods now thrown an exception:
 
 and are replaced by these methods which return the changed value:
 
-    $dt->with_add_duration()
-    $dt->with_subtract_duration()
-    $dt->with_add()
-    $dt->with_subtract()
-    $dt->with_set()
+    $dt->plus_duration()
+    $dt->minus_duration()
+    $dt->plus()
+    $dt->minus()
+    $dt->with_component()
     $dt->with_year()
     $dt->with_month()
     $dt->with_day()
@@ -107,7 +107,7 @@ and are replaced by these methods which return the changed value:
     $dt->with_minute()
     $dt->with_second()
     $dt->with_nanosecond()
-    $dt->with_truncate()
+    $dt->trunc()
 
 At the moment, C<set_time_zone>, C<set_locale>, and C<set_formatter> continue
 to act as mutators. DateTime uses these internally and changing them creates

@@ -72,11 +72,11 @@ The following methods now thrown an exception:
 
 and are replaced by these methods which return the changed value:
 
-    $dt->with_add_duration()
-    $dt->with_subtract_duration()
-    $dt->with_add()
-    $dt->with_subtract()
-    $dt->with_set()
+    $dt->plus_duration()
+    $dt->minus_duration()
+    $dt->plus()
+    $dt->minus()
+    $dt->with_component()
     $dt->with_year()
     $dt->with_month()
     $dt->with_day()
@@ -84,7 +84,7 @@ and are replaced by these methods which return the changed value:
     $dt->with_minute()
     $dt->with_second()
     $dt->with_nanosecond()
-    $dt->with_truncate()
+    $dt->trunc()
 
 At the moment, C<set_time_zone>, C<set_locale>, and C<set_formatter> continue
 to act as mutators. DateTime uses these internally and changing them creates

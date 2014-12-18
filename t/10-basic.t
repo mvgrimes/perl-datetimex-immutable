@@ -26,10 +26,10 @@ for my $mutator (@mutators) {
 }
 
 # Now try the new methods
-is $dt->with_add( minutes => 20 )->st, '2014-12-09T12:20:00EST', 'add 20min';
+is $dt->plus( minutes => 20 )->st, '2014-12-09T12:20:00EST', 'add 20min';
 is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
-is $dt->with_subtract( minutes => 20 )->st, '2014-12-09T11:40:00EST',
+is $dt->minus( minutes => 20 )->st, '2014-12-09T11:40:00EST',
   'subtract 20min';
 is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
@@ -54,10 +54,10 @@ is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 is $dt->with_nanosecond(20)->st, '2014-12-09T12:00:00EST', 'nanosecond=20';
 is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
-is $dt->with_set( minute => 20 )->st, '2014-12-09T12:20:00EST', 'set 20min';
+is $dt->with_component( minute => 20 )->st, '2014-12-09T12:20:00EST', 'set 20min';
 is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
-is $dt->with_truncate( to => 'day' )->st, '2014-12-09T00:00:00EST',
+is $dt->trunc( to => 'day' )->st, '2014-12-09T00:00:00EST',
   'truncate to day';
 is $dt->st, '2014-12-09T12:00:00EST', '... and does not mutate';
 
