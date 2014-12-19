@@ -21,13 +21,17 @@
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "1.0000",
             "DateTime" : "1.00",
             "Role::Tiny" : "1.000",
+            "Sub::Install" : "0.900",
+            "namespace::autoclean" : "0.21",
             "perl" : "5.006"
          }
       },
       "test" : {
          "requires" : {
+            "Test::Exception" : "0.35",
             "Test::More" : "0.87"
          }
       }
@@ -35,24 +39,24 @@
    "provides" : {
       "DateTimeX::Immutable" : {
          "file" : "lib/DateTimeX/Immutable.pm",
-         "version" : "0.33"
+         "version" : "0.34"
       },
       "DateTimeX::Role::Immutable" : {
          "file" : "lib/DateTimeX/Role/Immutable.pm",
-         "version" : "0.33"
+         "version" : "0.34"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "http://rt.cpan.org/NoAuth/Bugs.html?Dist=DateTimeX-Immutable"
+         "web" : "https://github.com/mvgrimes/perl-datetimex-immutable/issues"
       },
       "license" : [
          "http://dev.perl.org/licenses/"
       ],
       "repository" : {
-         "url" : "http://github.com/mvgrimes/DateTimeX-Immutable"
+         "url" : "https://github.com/mvgrimes/perl-datetimex-immutable"
       }
    },
-   "version" : "0.33"
+   "version" : "0.34"
 }
