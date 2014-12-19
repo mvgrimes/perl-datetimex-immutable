@@ -37,7 +37,6 @@ before keys %mutators => sub {
 };
 
 while ( my ( $orig_method, $new_method ) = each %mutators ) {
-    print "# $orig_method => $new_method\n";
     Sub::Install::install_sub( {
             code => sub {
                 my $self = shift;
