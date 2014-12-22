@@ -10,7 +10,7 @@ use Sub::Install;
 use DateTime;
 use namespace::autoclean;
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 my %mutators = (
     add_duration      => 'plus_duration',
@@ -60,7 +60,7 @@ DateTimeX::Role::Immutable - A role that can be composed into a DateTime subclas
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 SYNOPSIS
 

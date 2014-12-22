@@ -4,7 +4,7 @@ DateTimeX::Immutable - An immutable subclass of DateTime
 
 # VERSION
 
-version 0.34
+version 0.35
 
 # SYNOPSIS
 

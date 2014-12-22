@@ -9,12 +9,13 @@ my $build = Module::Build->new(
     },
 
     requires => {
-        'perl'                 => '5.006',
-        'DateTime'             => '1.00',
-        'Role::Tiny'           => '1.000',
-        'Carp'                 => '1.0000',
-        'Sub::Install'         => '0.900',
-        'namespace::autoclean' => '0.21',
+        'perl'                     => '5.006',
+        'DateTime'                 => '1.00',
+        'Role::Tiny'               => '1.000',
+        'Class::Method::Modifiers' => '2.00',
+        'Carp'                     => '1.0000',
+        'Sub::Install'             => '0.900',
+        'namespace::autoclean'     => '0.21',
     },
 
     test_requires => {

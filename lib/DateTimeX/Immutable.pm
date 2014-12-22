@@ -8,7 +8,7 @@ use base 'DateTime';
 use Role::Tiny::With;
 use namespace::autoclean;
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 with 'DateTimeX::Role::Immutable';
 
@@ -27,7 +27,7 @@ DateTimeX::Immutable - An immutable subclass of DateTime
 
 =head1 VERSION
 
-version 0.34
+version 0.35
 
 =head1 SYNOPSIS
 
